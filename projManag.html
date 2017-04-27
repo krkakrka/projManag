@@ -1,3 +1,4 @@
+<input id="projectName" type="text" onchange="onProjectNameChange()">
 <p id="projectData"></p>
 <button id="downloadButton">Download</button>
 <!-- declarative better -->
@@ -6,10 +7,12 @@
 
 <script src="projectManager.js"></script>
 <script>
-  var projManag = new ProjectManager();
-  projManag.renderData('projectData');
+  var projManag = new ProjectManager({
+    nameElementId: 'projectName',
+    dataElementId: 'projectData'
+  });
 
-  // Add event listener to download button
+  // Add event listener to download button.
   // todo id duplication
   var downloadButton = document.getElementById('downloadButton');
   // todo why do we need to do binding here? Otherwise, this === window
@@ -17,7 +20,14 @@
 
   function onProjectFileUpload(file){
     projManag.updateProjectDataWithFile(file);
-    // todo duplication.
-    projManag.renderData('projectData');
+  }
+
+  // todo event is triggered only after focus is lost. Could be live
+  function onProjectNameChange(){
+    // todo element ids are constants, duplication
+    var nameInput = document.getElementById('projectName');
+    projManag.projectData.name = nameInput.value;
+    // todo live binding, don't need to tell projManag when to rerender
+    projManag.renderAll();
   }
 </script>
