@@ -2,45 +2,22 @@
 <button id="downloadButton">Download</button>
 <!-- declarative better -->
 <!-- todo add name somehow -->
-<input type="file" id="openProjectInput" onchange="onProjectFileOpen(this.files)">
+<input type="file" id="openProjectInput" onchange="onProjectFileUpload(this.files[0])">
 
+<script src="projectManager.js"></script>
 <script>
-  // todo move init steps to functions
-  // init projectData and display it
-  var projectData = {};
-
-  var projectDataParagraph = document.getElementById('projectData');
-  projectDataParagraph.innerHTML = JSON.stringify(projectData);
+  var projManag = new ProjectManager();
+  projManag.renderData('projectData');
 
   // Add event listener to download button
   // todo id duplication
   var downloadButton = document.getElementById('downloadButton');
-  // todo debug function, put somewhere else
-  var logFirstArg = function(arg) { console.log(arg) };
+  // todo why do we need to do binding here? Otherwise, this === window
+  downloadButton.addEventListener('click', projManag.downloadProjectData.bind(projManag));
 
-  var downloadJson = function(obj) {
-    var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(obj));
-
-    var a = document.createElement('a');
-    a.href = 'data:' + data;
-    var fileName = obj.name || 'project';
-    a.download = fileName + '.json';
-    a.click();
-  };
-
-  var downloadProjectJson = downloadJson.bind(undefined, projectData);
-  downloadButton.addEventListener('click', downloadProjectJson);
-
-  // todo tidy up
-  // todo namespace
-  function onProjectFileOpen(files){
-    var file = files[0];
-    var reader = new FileReader();
-    // async
-    reader.onload = function(event){
-      var result = event.target.result;
-      // todo load the new project
-    };
-    reader.readAsText(file);
+  function onProjectFileUpload(file){
+    projManag.updateProjectDataWithFile(file);
+    // todo duplication.
+    projManag.renderData('projectData');
   }
 </script>
