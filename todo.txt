@@ -1,0 +1,30 @@
+Tracking of personal projects
+
+List of projects.
+Y?
+Projects has a very specific goal and how to evaluate it.
+Then has a high level roadmap.
+
+Essentially a pretty way to display and manipulate a JSON file.
+Web based tool.
+First, save as file
+Later on, save on gdrive/other drives
+
+------
+Name: Personal projects tracker.
+Problem/goal/why:
+  - One place to go and track projects instead of many.
+  - Practice project.
+Restrictions:
+  - Web based for reachability.
+  - Vanilla javascript.
+  - Web components for practice (vanilla).
+  - TDD for practice.
+Roadmap:
+  - Save the project to a file.
+  - Open a project file.
+  - Can edit a name.
+  - Can edit problem/goal/why.
+  - Can edit restrictions.
+  - Can edit a roadmap.
+  - Can mark roadmap steps as COMPLETE.
